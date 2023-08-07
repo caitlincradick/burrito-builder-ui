@@ -77,7 +77,7 @@ function handleSubmit(e) {
 
       <p>Order: {ingredients|| "Nothing selected"}</p>
 
-      <button onClick={(e) => handleSubmit(e)} disabled={(name.length === 0) || (ingredients.length === 0)}>Submit Order</button>
+      <button className="submit" onClick={(e) => handleSubmit(e)} disabled={(name.length === 0) || (ingredients.length === 0)}>Submit Order</button>
     </form>
   );
 }
