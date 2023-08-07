@@ -43,7 +43,7 @@ describe('homepage', () => {
        name:'Caitlin',
        ingredients: ["guacamole"]
      }
-    })
+    }).as('post')
     cy.get('form').find('input').type('Caitlin').should('have.value', 'Caitlin')
     .get('form').find('[name="guacamole"]').click().should('have.attr', 'name', 'guacamole')
     .get('.submit').click()
