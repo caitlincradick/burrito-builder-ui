@@ -3,5 +3,20 @@ export const getOrders = () => {
 };
 
 export function postOrders(newOrder) {
-  return fetch()
+  return fetch("http://localhost:3001/api/v1/orders", {
+    method:'POST', 
+    statusCode:200,
+    headers:{
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newOrder)
+  })
+  .then(res => {
+    if(res.ok){
+      return res
+    } else {
+      throw new Error('NOOOO')
+    }
+  })
+  .then(res => res.json())
 }

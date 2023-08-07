@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { postOrders } from "../../apiCalls";
 
 function OrderForm({addOrder}) {
   const [name, setName] = useState("");
@@ -9,14 +10,18 @@ console.log('INGREDIETNS', ingredients)
 
 function handleSubmit(e) {
   e.preventDefault();
-//   if(name === "" && ingredients.length === 0) {
-//  return <h1>FILLOUT FORM</h1>
-//   } else {
+//   if(name === "" || ingredients.length === 0) {
+//  alert('FILL OUT FORM')
+//  return
+  // } else {
     const newOrder = {
       name:name, 
       ingredients:ingredients
     }
-    addOrder(newOrder)
+    postOrders(newOrder)
+    .then(data => {
+      addOrder(data)
+    })
     clearInputs();
   // }
   }
@@ -72,7 +77,7 @@ function handleSubmit(e) {
 
       <p>Order: {ingredients|| "Nothing selected"}</p>
 
-      <button onClick={(e) => handleSubmit(e)} disabled={!name || !ingredients}>Submit Order</button>
+      <button onClick={(e) => handleSubmit(e)} disabled={(name.length === 0) || (ingredients.length === 0)}>Submit Order</button>
     </form>
   );
 }
