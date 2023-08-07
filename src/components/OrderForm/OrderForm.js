@@ -1,12 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function OrderForm(props) {
+function OrderForm({addOrder}) {
   const [name, setName] = useState("");
   const [ingredients, setIngredients] = useState([]);
+console.log('NAME', name)
+console.log('INGREDIETNS', ingredients)
 
-  function handleSubmit(e) {
-    e.preventDefault();
+
+function handleSubmit(e) {
+  e.preventDefault();
+//   if(name === "" && ingredients.length === 0) {
+//  return <h1>FILLOUT FORM</h1>
+//   } else {
+    const newOrder = {
+      name:name, 
+      ingredients:ingredients
+    }
+    addOrder(newOrder)
     clearInputs();
+  // }
+  }
+
+
+  function handleIngredientClick(e,ingredient){
+    e.preventDefault()
+    setIngredients((prev) => [...prev, ingredient])
   }
 
   function clearInputs() {
@@ -33,7 +51,7 @@ function OrderForm(props) {
       <button
         key={ingredient}
         name={ingredient}
-        // onClick={(e) => }
+        onClick={(e) => handleIngredientClick(e,ingredient)}
       >
         {ingredient}
       </button>
@@ -47,14 +65,14 @@ function OrderForm(props) {
         placeholder="Name"
         name="name"
         value={name}
-        // onChange={(e) => }
+        onChange={(e) => setName(e.target.value) }
       />
-
+      
       {ingredientButtons}
 
-      <p>Order: {ingredients.join(", ") || "Nothing selected"}</p>
+      <p>Order: {ingredients|| "Nothing selected"}</p>
 
-      <button onClick={(e) => handleSubmit(e)}>Submit Order</button>
+      <button onClick={(e) => handleSubmit(e)} disabled={!name || !ingredients}>Submit Order</button>
     </form>
   );
 }
